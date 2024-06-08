@@ -55,11 +55,10 @@ public class DoubleLinkedLists11 {
             } else {
                 Node11 newNode11 = new Node11(current.prev, item, current);
                 newNode11.prev.next = newNode11;
-                newNode11.next = current;
                 current.prev = newNode11;
             }
+            size++;
         }
-        size++;
     }
 
     public int size() {
@@ -89,12 +88,13 @@ public class DoubleLinkedLists11 {
             throw new Exception("Linked list masih kosong, tidak dapat dihapus!");
         } else if (size == 1) {
             head = null;
-            size--;
         } else {
             head = head.next;
-            head.prev = null;
-            size--;
+            if (head != null) {
+                head.prev = null;
+            }
         }
+        size--;
     }
 
     public void removeLast() throws Exception {
@@ -136,6 +136,47 @@ public class DoubleLinkedLists11 {
                 current.next.prev = current.prev;
             }
             size--;
+        }
+    }
+
+    public int getFirst() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("Linked list kosong");
+        }
+        return head.data;
+    }
+
+    public int getLast() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("Linked list kosong");
+        }
+        Node11 tmp = head;
+        while (tmp.next != null) {
+            tmp = tmp.next;
+        }
+        return tmp.data;
+    }
+
+    public int get(int index) throws Exception {
+        if (isEmpty() || index >= size) {
+            throw new Exception("Nilai indeks di luar batas");
+        }
+        Node11 tmp = head;
+        for (int i = 0; i < index; i++) {
+            tmp = tmp.next;
+        }
+        return tmp.data;
+    }
+
+    class Node11 {
+        int data;
+        Node11 prev;
+        Node11 next;
+
+        public Node11(Node11 prev, int data, Node11 next) {
+            this.data = data;
+            this.prev = prev;
+            this.next = next;
         }
     }
 }
